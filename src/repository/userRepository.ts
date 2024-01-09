@@ -29,7 +29,6 @@ const saveNewUser = async (username: string, email: string, pwd: string): Promis
 
 const _hashPassword = async (pwd: string): Promise<string> => {
   const salt = await bcrypt.genSalt(10)
-  console.log(salt)
   return bcrypt.hash(pwd, salt)
 }
 

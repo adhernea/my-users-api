@@ -11,6 +11,11 @@ const registerUser = async (req: Request, res: Response) => {
     return
   }
 
+  if (!req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('name') || !req.body.hasOwnProperty('email')) {
+    res.status(400).json({ message: "Request body incomplete" })
+    return
+  }
+
   const { name, email, password } = req.body
   const userExists = userRepository.userExists(name, email)
 
@@ -30,6 +35,17 @@ const registerUser = async (req: Request, res: Response) => {
 }
 
 const authenticateUser = async (req: Request, res: Response) => {
+
+  if (req.body == undefined) {
+    res.status(400).json({ message: "Request body not found" })
+    return
+  }
+
+  if (!req.body.hasOwnProperty('password') || !req.body.hasOwnProperty('name')) {
+    res.status(400).json({ message: "Request body incomplete" })
+    return
+  }
+
   const { name, password } = req.body
   const user = userRepository.findUserByName(name)
   if (user != undefined && await userRepository.checkPassword(password, user.hashedPwd)) {
