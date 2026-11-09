@@ -1,28 +1,34 @@
-import jwt from "jsonwebtoken";
-import { Response } from "express";
+import { Response, NextFunction } from 'express';
+import jwt from 'jsonwebtoken';
+import { AuthenticatedRequest } from '../models/requests/AuthenticatedRequest';
 
-const generateToken = (res: Response, userId: number) => {
-  const jwtSecret = process.env.JWT_SECRET || "";
-  const token = jwt.sign({ userId }, jwtSecret, {
-    expiresIn: "1h",
-  });
+const JWT_SECRET = process.env.JWT_SECRET || 'clave_secreta_fallback';
 
-  res.cookie("jwt", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV !== "development",
-    sameSite: "strict",
-    maxAge: 60 * 60 * 1000,
+const generateToken = (userId: number): string => {
+  return jwt.sign({ userId }, JWT_SECRET, { expiresIn: '1h' });
+};
+
+const authenticateToken = (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.status(401).json({ message: 'Token no proporcionado' });
+  }
+
+  jwt.verify(token, JWT_SECRET, (err, decoded: any) => {
+    if (err) {
+      return res.status(401).json({ message: 'Token inválido o expirado' });
+    }
+    req.userId = decoded.userId;
+    next();
   });
 };
 
-const clearToken = (res: Response) => {
-  res.cookie("jwt", "", {
-    httpOnly: true,
-    expires: new Date(0),
-  });
+export const tokenUtils = {
+  generateToken,
+  authenticateToken
 };
-
-export const tokenUtils = { generateToken, clearToken };
 
 /* We include the userId in the token and set the expiration to 1 hour.
 Then we set a cookie as jwt with the generated token value.
