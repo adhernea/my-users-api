@@ -1,23 +1,21 @@
 import { Request, Response } from 'express';
-import bcrypt from 'bcrypt';
-import { tokenUtils } from '../utils/tokenUtils';
-import { UserRepository } from '../repository/UserRepository';
-import { UserEntity } from '../models/entities/UserEntity';
 import { AuthenticatedRequest } from '../models/requests/AuthenticatedRequest';
-import { UserResponse } from '../models/responses/UserResponse';
 import { UserService } from '../services/UserService';
+import { logMessage } from '../utils/logger';
 
 export class UserController {
 
   static async register(req: Request, res: Response) {
-    const { name, email, pwd } = req.body;
+    const { fullName, email, pwd } = req.body;
 
-    if (!name || !email || !pwd) {
+    logMessage('Register', `Intento de registro para ${fullName} (${email})`);
+
+    if (!fullName || !email || !pwd) {
       return res.status(400).json({ message: 'Todos los campos son obligatorios.' });
     }
 
     try {
-      await UserService.registerNewUser(name, email, pwd);
+      await UserService.registerNewUser(fullName, email, pwd);
       return res.status(201).json({ message: 'Usuario registrado con éxito.' });
     } catch (error: any) {
       if (error.message === 'EMAIL_EXISTS') {
@@ -29,6 +27,8 @@ export class UserController {
 
   static async login(req: Request, res: Response) {
     const { email, pwd } = req.body;
+
+    logMessage('Register', `Intento de login para ${email}`);
 
     if (!email || !pwd) {
       return res.status(400).json({ message: 'Email y contraseña requeridos.' });
@@ -46,6 +46,7 @@ export class UserController {
   }
 
   static checkToken(req: AuthenticatedRequest, res: Response) {
+    logMessage('Check Token', `Intento de usuario`);
     return res.json({ message: `Token válido del usuario ${req.userId}.` });
   }
 
@@ -53,6 +54,7 @@ export class UserController {
 
     try {
       const user = UserService.getUserById(req.userId!);
+      logMessage('Welcome', `Mensaje para ${user!.name}`);
 
       return res.json({
         message: `¡Bienvenido a la aplicación, ${user!.name}!`
