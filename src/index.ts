@@ -1,16 +1,19 @@
 import express from 'express'
-import userRoutes from "./routes/userRoutes"
+import cors from 'cors';
 import dotenv from "dotenv"
+import authRoutes from "./routes/AuthRoutes"
 
-dotenv.config()
+dotenv.config();
 
-const app = express()
-const port = process.env.PORT || 8000
+const app = express();
+const port = process.env.PORT || 8000;
 
-app.use(express.json())
-app.use(userRoutes)
+app.use(cors());
+app.use(express.json());
+
+app.use('/', authRoutes);
 
 app.listen(port, () => {
-  console.log(`Server is running on port ${port}`)
+  console.log(`Server is running on port ${port}`);
 })
 
