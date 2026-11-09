@@ -28,7 +28,7 @@ export class UserService {
 
         const token = tokenUtils.generateToken(user.id);
 
-        const { password: _, ...userResponse } = user;
+        const { ...userResponse } = user;
 
         return { token, user: userResponse };
     }
@@ -37,7 +37,7 @@ export class UserService {
         const user = UserRepository.findById(id);
         if (!user) throw new Error('NO_USER');
 
-        const { password: _, ...userResponse } = user;
+        const { ...userResponse } = user;
         return userResponse;
     }
 }
