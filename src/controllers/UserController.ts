@@ -35,8 +35,8 @@ export class UserController {
     }
 
     try {
-      const { token } = await UserService.logUser(email, pwd);
-      return res.status(201).json({ message: 'Inicio de sesión exitoso', token });
+      const { token, user } = await UserService.logUser(email, pwd);
+      return res.status(201).json({ message: 'Inicio de sesión exitoso', token, user });
     } catch (error: any) {
       if (error.message === 'INVALID_CREDENTIALS') {
         return res.status(401).json({ message: 'Credenciales incorrectas.' });

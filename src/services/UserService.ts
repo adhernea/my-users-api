@@ -28,7 +28,8 @@ export class UserService {
 
         const token = tokenUtils.generateToken(user.id);
 
-        const { ...userResponse } = user;
+        const userResponse = { ...user };
+        delete (userResponse as any).password;
 
         return { token, user: userResponse };
     }
