@@ -5,7 +5,14 @@ export default tseslint.config(
   {
     rules: {
       'semi': ['error', 'always'],
-      '@typescript-eslint/no-explicit-any': 'off' // Para evitar avisos por req as any en Express
+      '@typescript-eslint/no-explicit-any': 'off', // Para evitar avisos por req as any en Express
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
     }
   }
 );
