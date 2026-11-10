@@ -22,7 +22,7 @@ export const requestLogger = (req: Request, res: Response, next: NextFunction): 
     const duration = Date.now() - start;
     const statusCode = res.statusCode;
 
-    logMessage(`${_formatDate(new Date())}`, `${method} ${originalUrl} -> Status: ${statusCode} (${duration}ms)`)
+    logMessage(`${_formatDate(new Date())}`, `${method} ${originalUrl} -> Status: ${statusCode} (${duration}ms)`);
   });
 
   next();
