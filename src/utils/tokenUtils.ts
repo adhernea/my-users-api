@@ -13,12 +13,14 @@ const authenticateToken = (req: AuthenticatedRequest, res: Response, next: NextF
   const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({ message: 'Token no proporcionado' });
+    res.status(401).json({ message: 'Token no proporcionado' });
+    return;
   }
 
   jwt.verify(token, JWT_SECRET, (err, decoded: any) => {
     if (err) {
-      return res.status(401).json({ message: 'Token inválido o expirado' });
+      res.status(401).json({ message: 'Token inválido o expirado' });
+      return;
     }
     req.userId = decoded.userId;
     next();
