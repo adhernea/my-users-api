@@ -38,13 +38,21 @@ JWT_SECRET=your_development_secret_key
 
 ### 3. Run Server
 
+The server will run at: http://localhost:8888 when executing:
+
 ```text
 npm run dev
-The server will run at: http://localhost:8888
 ```
 
----
+### 4. Code Quality (ESLint)
 
+Checks for formatting issues (such as missing semicolons)
+> npm run lint
+
+Automatically fixes formatting issues
+> npm run lint:fix
+
+---
 
 ## API Endpoints
 
@@ -57,35 +65,35 @@ More info in spanish --> [here!](./docs/endpoints_api.md) <--
 
 ---
 
+## Arquitectura de Gestión de Errores
 
+El proyecto utiliza una estrategia **centralizada y basada en excepciones** para garantizar que todas las respuestas de error sean consistentes en formato JSON y sigan la especificación HTTP correspondiente.
 
-## Testing with Bruno
+### Jerarquía de Excepciones Custom (`AppError`)
 
+Todos los errores conocidos del dominio extienden de una clase base `AppError` que encapsula el código de estado HTTP (`statusCode`) y el mensaje descriptivo.
 
+* `BadRequestError` (`400`): Validación de campos obligatorios u opcionales.
+* `UnauthorizedError` (`401`): Token no enviado, caducado o firma no válida.
+* `NotFoundError` (`404`): Recurso o usuario no encontrado en la base de datos.
+* `ConflictError` (`409`): Duplicación de datos (email existente) o credenciales incorrectas.
 
-Open the Bruno extension/app and select the project directory to load the preconfigured collection.
+### Formato Unificado de Respuesta JSON
 
+Independientemente de la ruta o el tipo de fallo, la API responde siempre con la estructura:
 
+```json
+{
+  "message": "Mensaje descriptivo del error."
+}
+```
 
-1. Environment: Select Local (baseUrl: http://localhost:8888).
+### Middlewares Globales
 
-2. Testing Order: 1. Register -> 2. Login -> 3. Check Token -> 4. Welcome.
-
-
+1. **`notFoundHandler`**: Captura cualquier petición a un endpoint no registrado (ej. `GET /ruta-inexistente`) y la redirige al manejador global lanzando un `NotFoundError (404)` en lugar de devolver la página HTML por defecto de Express.
+2. **`errorHandler`**: Registrado como último middleware en `app.ts` con la firma de 4 parámetros `(err, req, res, next)`. Captura todas las excepciones propagadas por `next(error)` en los controladores y estructura la respuesta JSON adecuada.
 
 ---
 
 
-
-## Code Quality (ESLint)
-
-
-
-npm run lint      # Checks for formatting issues (such as missing semicolons)
-
-npm run lint:fix  # Automatically fixes formatting issues
-
-
-
-
-For more information, don't contact me and remove your chestnuts from the fire.
+> For more information, don't contact me and remove your chestnuts from the fire.
