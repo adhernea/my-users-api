@@ -4,6 +4,7 @@ import { UserService } from '../services/UserService.js';
 import { AuthenticatedRequest } from '../models/requests/AuthenticatedRequest.js';
 import { ErrorMessages } from '../utils/messages/ErrorMessages.js';
 import { BadRequestError } from '../exceptions/BadRequestError.js';
+import { SuccessfulMessages } from '../utils/messages/SuccessfulMessages.js';
 
 export class UserController {
 
@@ -17,7 +18,7 @@ export class UserController {
     }
 
     await UserService.registerNewUser(fullName, email, pwd);
-    return res.status(201).json({ message: 'Usuario registrado con éxito.' });
+    return res.status(201).json({ message: SuccessfulMessages.USER_REGISTERED });
   }
 
   static async login(req: Request, res: Response) {
@@ -30,20 +31,20 @@ export class UserController {
     }
 
     const { token, user } = await UserService.logUser(email, pwd);
-    return res.status(201).json({ message: 'Inicio de sesión exitoso', token, user });
+    return res.status(201).json({ message: SuccessfulMessages.USER_LOGGED, token, user });
   }
 
   static checkToken(req: AuthenticatedRequest, res: Response) {
     logMessage('Check Token', `Intento de usuario`);
-    return res.json({ message: `Token válido del usuario ${req.userId}.` });
+    return res.json({ message: SuccessfulMessages.buildValidToken(req.userId!)});
   }
 
   static welcome(req: AuthenticatedRequest, res: Response) {
     const user = UserService.getUserById(req.userId!);
-    logMessage('Welcome', `Mensaje para ${user!.name}`);
+    logMessage('Welcome', `Bienvenida para ${user!.name}`);
 
     return res.json({
-      message: `¡Bienvenido a la aplicación, ${user!.name}!`
+      message: SuccessfulMessages.buildWelcome(user!.name)
     });
   }
 }
