@@ -31,7 +31,7 @@ export class UserController {
     }
 
     const { token, user } = await UserService.logUser(email, pwd);
-    return res.status(201).json({ message: SuccessfulMessages.USER_LOGGED, token, user });
+    return res.json({ message: SuccessfulMessages.USER_LOGGED, token, user });
   }
 
   // GET /check-token
