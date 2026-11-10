@@ -1,12 +1,31 @@
 {
   "compilerOptions": {
-    "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "module": "commonjs",                                /* Specify what module code is generated. */
-    "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,                                      /* Enable all strict type-checking options. */
-    "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
-    "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
-  }
+    /* Objetivos de Entorno y Módulos */
+    "target": "ES2023",                      /* Sintaxis JavaScript moderna compatible con Node 26 */
+    "module": "NodeNext",                    /* Resolución de módulos nativa de Node.js (ESM) */
+    "moduleResolution": "NodeNext",
+    "lib": ["ES2023"],                       /* Definiciones de tipos del runtime sin incluir la DOM */
+
+    /* Salida y Estructura de Directorios */
+    "rootDir": "./src",                      /* Código fuente en TypeScript */
+    "outDir": "./dist",                      /* Código transpilado de salida */
+    "removeComments": true,
+    "sourceMap": true,                       /* Facilita el depurado en desarrollo */
+
+    /* Comprobaciones de Tipo Estrictas */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+
+    /* Interoperabilidad y Modulos */
+    "esModuleInterop": true,                 /* Permite 'import express from "express"' */
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true                     /* Acelera la compilación ignorando chequeos en node_modules */
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
 }
