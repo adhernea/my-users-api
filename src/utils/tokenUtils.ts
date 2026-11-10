@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { AuthenticatedRequest } from '../models/requests/AuthenticatedRequest';
+import { AuthenticatedRequest } from '../models/requests/AuthenticatedRequest.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'clave_secreta_fallback';
 

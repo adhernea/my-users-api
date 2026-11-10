@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { AuthenticatedRequest } from '../models/requests/AuthenticatedRequest';
-import { UserService } from '../services/UserService';
-import { logMessage } from '../utils/logger';
+import { logMessage } from '../utils/logger.js';
+import { UserService } from '../services/UserService.js';
+import { AuthenticatedRequest } from '../models/requests/AuthenticatedRequest.js';
 
 export class UserController {
 

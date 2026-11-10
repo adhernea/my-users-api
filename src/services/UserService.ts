@@ -1,7 +1,7 @@
-import bcrypt from 'bcrypt';
-import { tokenUtils } from '../utils/tokenUtils';
-import { UserResponse } from '../models/responses/UserResponse';
-import { UserRepository } from '../repository/UserRepository';
+import bcrypt from "bcryptjs";
+import { UserRepository } from "../repository/UserRepository.js";
+import { UserResponse } from "../models/responses/UserResponse.js";
+import { tokenUtils } from "../utils/tokenUtils.js";
 
 export class UserService {
 

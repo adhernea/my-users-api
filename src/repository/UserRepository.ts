@@ -1,6 +1,6 @@
 import Database from 'better-sqlite3';
-import { UserEntity } from '../models/entities/UserEntity';
 import fs from 'fs';
+import { UserEntity } from '../models/entities/UserEntity.js';
 
 if (!fs.existsSync('./data')) fs.mkdirSync('./data');
 

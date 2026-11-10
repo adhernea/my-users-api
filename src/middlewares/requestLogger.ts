@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { logMessage } from '../utils/logger';
+import { logMessage } from '../utils/logger.js';
 
 const _formatDate = (date: Date): string => {
   const pad = (num: number) => num.toString().padStart(2, '0');
