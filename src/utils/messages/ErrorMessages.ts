@@ -13,4 +13,8 @@ export class ErrorMessages {
     public static USER_NOT_FOUND: string = 'Usuario no encontrado.';
 
     public static INTERNAL_SERVER_ERROR: string = 'Error interno del servidor. Disculpe las molestias';
+
+    public static buildRouteNotFound(method: string, url:string): string {
+        return `La ruta [${method} ${url}] no existe.`
+    }
 }
