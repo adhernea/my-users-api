@@ -5,6 +5,7 @@ import { requestLogger } from './middlewares/requestLogger.js';
 import authRouter from './routes/AuthRouter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
+import serverRouter from './routes/ServerRouter.js';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(requestLogger);
 
 app.use('/', authRouter);
+app.use('/server', serverRouter);
 
 app.use(notFoundHandler);
 
