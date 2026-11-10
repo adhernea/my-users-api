@@ -8,9 +8,9 @@ import { SuccessfulMessages } from '../utils/messages/SuccessfulMessages.js';
 
 export class UserController {
 
+  // POST /register
   static async register(req: Request, res: Response) {
     const { fullName, email, pwd } = req.body;
-
     logMessage('Register', `Intento de registro para ${fullName} (${email})`);
 
     if (!fullName || !email || !pwd) {
@@ -21,9 +21,9 @@ export class UserController {
     return res.status(201).json({ message: SuccessfulMessages.USER_REGISTERED });
   }
 
+  //POST Login
   static async login(req: Request, res: Response) {
     const { email, pwd } = req.body;
-
     logMessage('Register', `Intento de login para ${email}`);
 
     if (!email || !pwd) {
@@ -34,11 +34,13 @@ export class UserController {
     return res.status(201).json({ message: SuccessfulMessages.USER_LOGGED, token, user });
   }
 
+  // GET /check-token
   static checkToken(req: AuthenticatedRequest, res: Response) {
     logMessage('Check Token', `Intento de usuario`);
-    return res.json({ message: SuccessfulMessages.buildValidToken(req.userId!)});
+    return res.json({ message: SuccessfulMessages.buildValidToken(req.userId!) });
   }
 
+  // Get /welcome
   static welcome(req: AuthenticatedRequest, res: Response) {
     const user = UserService.getUserById(req.userId!);
     logMessage('Welcome', `Bienvenida para ${user!.name}`);
