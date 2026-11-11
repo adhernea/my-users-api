@@ -1,6 +1,6 @@
-import express from 'express'
+import express from 'express';
 import cors from 'cors';
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 import { requestLogger } from './middlewares/requestLogger.js';
 import authRouter from './routes/AuthRouter.js';
 import { errorHandler } from './middlewares/errorHandler.js';
@@ -17,8 +17,8 @@ app.use(express.json());
 
 app.use(requestLogger);
 
-app.use('/', authRouter);
-app.use('/server', serverRouter);
+app.use('/', serverRouter);
+app.use('/users', authRouter);
 
 app.use(notFoundHandler);
 
@@ -26,5 +26,5 @@ app.use(errorHandler);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-})
+});
 
