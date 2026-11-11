@@ -17,7 +17,7 @@ Documentación detallada de los contratos de entrada y salida para la integraci�
 
 ## 📖 Especificación Detallada
 
-### 1. Registrar Usuario (`POST /register`)
+### 1. Registrar Usuario (`POST /users/register`)
 
 - **Headers:**
   - `Content-Type: application/json`
@@ -59,7 +59,7 @@ Documentación detallada de los contratos de entrada y salida para la integraci�
 
 ---
 
-### 2. Iniciar Sesión (`POST /login`)
+### 2. Iniciar Sesión (`POST /users/login`)
 
 - **Headers:**
   - `Content-Type: application/json`
@@ -106,7 +106,7 @@ Documentación detallada de los contratos de entrada y salida para la integraci�
 
 ---
 
-### 3. Verificar Token (`GET /check-token`)
+### 3. Verificar Token (`GET /users/check-token`)
 
 - **Headers:**
   - `Authorization: Bearer <JWT_TOKEN>`
@@ -130,7 +130,7 @@ Documentación detallada de los contratos de entrada y salida para la integraci�
 
 ---
 
-### 4. Mensaje de Bienvenida (`GET /welcome`)
+### 4. Mensaje de Bienvenida (`GET /users/welcome`)
 
 - **Headers:**
   - `Authorization: Bearer <JWT_TOKEN>`

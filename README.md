@@ -56,10 +56,10 @@ Automatically fixes formatting issues
 
 ## API Endpoints
 
-- POST  /register            - Registers a new user
-- POST  /login               - Authenticates a user and returns a JWT token
-- GET   /check-token         - Verifies if the token is still valid
-- GET   /welcome             - Returns a personalized message with the user's name
+- POST  /users/register            - Registers a new user
+- POST  /users/login               - Authenticates a user and returns a JWT token
+- GET   /users/check-token         - Verifies if the token is still valid
+- GET   /users/welcome             - Returns a personalized message with the user's name
 
 More info in spanish --> [here!](./docs/endpoints_api.md) <--
 
