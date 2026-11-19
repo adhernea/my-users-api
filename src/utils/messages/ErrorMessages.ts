@@ -8,6 +8,7 @@ export class ErrorMessages {
 
     public static DEFAULT_BAD_REQUEST: string = 'Todos los campos son obligatorios.';
     public static BAD_REQUEST_LOGIN: string = 'Email y contraseña requeridos.';
+    public static BAD_REQUEST_EMAIL: string = 'Formato de email no válido.';
 
     public static DEFAULT_NOT_FOUND: string = 'No se ha encontrado el recurso solicitado.';
     public static USER_NOT_FOUND: string = 'Usuario no encontrado.';

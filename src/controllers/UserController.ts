@@ -5,6 +5,7 @@ import { AuthenticatedRequest } from '../models/requests/AuthenticatedRequest.js
 import { ErrorMessages } from '../utils/messages/ErrorMessages.js';
 import { BadRequestError } from '../exceptions/BadRequestError.js';
 import { SuccessfulMessages } from '../utils/messages/SuccessfulMessages.js';
+import { Validations } from '../utils/messages/Validations.js';
 
 export class UserController {
 
@@ -17,7 +18,11 @@ export class UserController {
       throw new BadRequestError(ErrorMessages.DEFAULT_BAD_REQUEST);
     }
 
-    await UserService.registerNewUser(fullName, email, pwd);
+    if (!Validations.EMAIL_REGEX.test(email.trim())) {
+      throw new BadRequestError(ErrorMessages.BAD_REQUEST_EMAIL);
+    }
+
+    await UserService.registerNewUser(fullName.trim(), email.trim(), pwd);
     return res.status(201).json({ message: SuccessfulMessages.USER_REGISTERED });
   }
 
@@ -30,7 +35,11 @@ export class UserController {
       throw new BadRequestError(ErrorMessages.BAD_REQUEST_LOGIN);
     }
 
-    const { token, user } = await UserService.logUser(email, pwd);
+    if (!Validations.EMAIL_REGEX.test(email.trim())) {
+      throw new BadRequestError(ErrorMessages.BAD_REQUEST_EMAIL);
+    }
+
+    const { token, user } = await UserService.logUser(email.trim(), pwd);
     return res.json({ message: SuccessfulMessages.USER_LOGGED, token, user });
   }
 
