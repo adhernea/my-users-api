@@ -24,7 +24,7 @@ export class UserController {
   // POST /users/login
   static async login(req: Request, res: Response) {
     const { email, pwd } = req.body;
-    logMessage('Register', `Intento de login para ${email}`);
+    logMessage('Login', `Intento de login para ${email}`);
 
     if (!email || !pwd) {
       throw new BadRequestError(ErrorMessages.BAD_REQUEST_LOGIN);
