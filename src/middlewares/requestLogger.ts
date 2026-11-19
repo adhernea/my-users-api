@@ -3,7 +3,7 @@ import { logMessage } from '../utils/logger.js';
 
 const _formatDate = (date: Date): string => {
   const pad = (num: number) => num.toString().padStart(2, '0');
-  
+
   const year = date.getFullYear();
   const month = pad(date.getMonth() + 1);
   const day = pad(date.getDate());
@@ -18,12 +18,14 @@ export const requestLogger = (req: Request, res: Response, next: NextFunction): 
   const start = Date.now();
   const { method, originalUrl } = req;
 
-  res.on('finish', () => {
-    const duration = Date.now() - start;
-    const statusCode = res.statusCode;
+  if (originalUrl != '/ping') {
+    res.on('finish', () => {
+      const duration = Date.now() - start;
+      const statusCode = res.statusCode;
 
-    logMessage(`${_formatDate(new Date())}`, `${method} ${originalUrl} -> Status: ${statusCode} (${duration}ms)`);
-  });
+      logMessage(`${_formatDate(new Date())}`, `${method} ${originalUrl} -> Status: ${statusCode} (${duration}ms)`);
+    });
+  }
 
   next();
 };
